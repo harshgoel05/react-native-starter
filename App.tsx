@@ -1,26 +1,47 @@
-import { StatusBar } from "expo-status-bar";
 import React, { Component } from "react";
-import { StyleSheet, Text, View, TextInput } from "react-native";
-
+import { StyleSheet, TextInput, Button, View, Text } from "react-native";
+import { Container, Header, Content } from "native-base";
+import ListItem from "./src/components/list";
 export default class App extends Component {
   state = {
-    name: "hi",
+    placeName: "",
+    places: [],
   };
   handleChange = (event: any) => {
-    console.log(event);
     this.setState({
-      name: event,
+      placeName: event,
     });
   };
+  onPress = () => {
+    this.setState((prevState: any) => {
+      if (this.state.placeName.trim() === "") {
+        return;
+      }
+      // this.setState({
+      //   placeName: "",
+      // });
+      return {
+        places: prevState.places.concat(prevState.placeName),
+      };
+    });
+  };
+  lapsList() {
+    return this.state.places.map((data, index) => {
+      return <ListItem key={index}>{data}</ListItem>;
+    });
+  }
   render() {
     return (
       <View style={styles.container}>
-        <Text>Hello World!</Text>
-        <TextInput
-          style={styles.inp}
-          value={this.state.name}
-          onChangeText={this.handleChange}
-        ></TextInput>
+        <View style={styles.placeCont}>
+          <TextInput
+            onChangeText={this.handleChange}
+            style={styles.placeInput}
+            value={this.state.placeName}
+          ></TextInput>
+          <Button onPress={this.onPress} title="Click" />
+        </View>
+        <View style={styles.listContainer}>{this.lapsList()}</View>
       </View>
     );
   }
@@ -29,13 +50,30 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    padding: 26,
+    justifyContent: "flex-start",
     alignItems: "center",
-    justifyContent: "center",
+    marginTop: 30,
   },
-  inp: {
+  placeCont: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  placeInput: {
+    borderColor: "blue",
     borderWidth: 1,
-    borderColor: "green",
-    minWidth: 100,
+    width: "70%",
+    padding: 3,
+  },
+  placeButton: {
+    width: "30%",
+  },
+  listContainer: {
+    width: "100%",
+    flex: 1,
+    justifyContent: "flex-start",
+    alignItems: "center",
   },
 });
