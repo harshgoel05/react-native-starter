@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { StyleSheet, TextInput, Button, View, Text } from "react-native";
 import { Container, Header, Content } from "native-base";
-import ListItem from "./src/components/list";
+import ListItem from "./src/components/ListItem";
 import PlaceInput from "./src/components/PlaceInput";
+import { PlaceList } from "./src/components/PlaceList";
 export default class App extends Component<any> {
   state = {
     places: [],
@@ -14,16 +15,12 @@ export default class App extends Component<any> {
       };
     });
   };
-  lapsList() {
-    return this.state.places.map((data, index) => {
-      return <ListItem key={index}>{data}</ListItem>;
-    });
-  }
+
   render() {
     return (
       <View style={styles.container}>
         <PlaceInput onPlaceAdded={this.placeAddedhandler}></PlaceInput>
-        <View style={styles.listContainer}>{this.lapsList()}</View>
+        <PlaceList places={this.state.places}></PlaceList>
       </View>
     );
   }
@@ -36,11 +33,5 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     marginTop: 30,
-  },
-  listContainer: {
-    width: "100%",
-    flex: 1,
-    justifyContent: "flex-start",
-    alignItems: "center",
   },
 });
