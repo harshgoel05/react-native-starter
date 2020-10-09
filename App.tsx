@@ -2,26 +2,15 @@ import React, { Component } from "react";
 import { StyleSheet, TextInput, Button, View, Text } from "react-native";
 import { Container, Header, Content } from "native-base";
 import ListItem from "./src/components/list";
-export default class App extends Component {
+import PlaceInput from "./src/components/PlaceInput";
+export default class App extends Component<any> {
   state = {
-    placeName: "",
     places: [],
   };
-  handleChange = (event: any) => {
-    this.setState({
-      placeName: event,
-    });
-  };
-  onPress = () => {
+  placeAddedhandler = (placeName: any) => {
     this.setState((prevState: any) => {
-      if (this.state.placeName.trim() === "") {
-        return;
-      }
-      // this.setState({
-      //   placeName: "",
-      // });
       return {
-        places: prevState.places.concat(prevState.placeName),
+        places: prevState.places.concat(placeName),
       };
     });
   };
@@ -33,14 +22,7 @@ export default class App extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.placeCont}>
-          <TextInput
-            onChangeText={this.handleChange}
-            style={styles.placeInput}
-            value={this.state.placeName}
-          ></TextInput>
-          <Button onPress={this.onPress} title="Click" />
-        </View>
+        <PlaceInput onPlaceAdded={this.placeAddedhandler}></PlaceInput>
         <View style={styles.listContainer}>{this.lapsList()}</View>
       </View>
     );
@@ -54,21 +36,6 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     marginTop: 30,
-  },
-  placeCont: {
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  placeInput: {
-    borderColor: "blue",
-    borderWidth: 1,
-    width: "70%",
-    padding: 3,
-  },
-  placeButton: {
-    width: "30%",
   },
   listContainer: {
     width: "100%",
