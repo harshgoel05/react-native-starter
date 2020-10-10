@@ -20,7 +20,12 @@ export default class PlaceInput extends Component<any> {
           value={this.state.placeName}
         ></TextInput>
         <Button
-          onPress={() => this.props.onPlaceAdded(this.state.placeName)}
+          onPress={() => {
+            this.props.onPlaceAdded(this.state.placeName);
+            this.setState({
+              placeName: "",
+            });
+          }}
           title="Click"
         />
       </View>

@@ -9,6 +9,9 @@ export default class App extends Component<any> {
     places: [],
   };
   placeAddedhandler = (placeName: any) => {
+    if (placeName.trim() === "") {
+      return;
+    }
     this.setState((prevState: any) => {
       return {
         places: prevState.places.concat(placeName),
