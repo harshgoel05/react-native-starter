@@ -15,12 +15,24 @@ export default class App extends Component<any> {
       };
     });
   };
+  placeDeletedHandler = (index: number) => {
+    this.setState((prevState: any) => {
+      return {
+        places: prevState.places.filter((place: any, i: any) => {
+          return i !== index;
+        }),
+      };
+    });
+  };
 
   render() {
     return (
       <View style={styles.container}>
         <PlaceInput onPlaceAdded={this.placeAddedhandler}></PlaceInput>
-        <PlaceList places={this.state.places}></PlaceList>
+        <PlaceList
+          places={this.state.places}
+          onDeletedhandler={this.placeDeletedHandler}
+        ></PlaceList>
       </View>
     );
   }

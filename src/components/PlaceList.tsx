@@ -5,7 +5,15 @@ import React from "react";
 export const PlaceList = (props: any) => {
   const lapsList = (props1: any) => {
     return props1.places.map((data: any, index: any) => {
-      return <ListItem key={index}>{data}</ListItem>;
+      return (
+        <ListItem
+          key={index}
+          onTouchHandler={() => {
+            props.onDeletedhandler(index);
+          }}
+          placeName={data}
+        />
+      );
     });
   };
   return <View style={styles.listContainer}>{lapsList(props)}</View>;
